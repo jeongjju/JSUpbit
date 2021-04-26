@@ -1,105 +1,61 @@
 import React, { Component } from 'react'
-import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
-import priceData from './assets/btcdata.json'
-import moment from 'moment'
+// import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
+// import priceData from './assets/btcdata.json'
+// import moment from 'moment'
+// import { connection, getTradePrice } from './upbit_lib';
+
+import Button from '@material-ui/core/Button';
+import CodeDialog from './components/codeDialog';
+import Chart from './Chart';
+import Modal from '@material-ui/core/Modal';
 
 export default class App extends Component {
-  render() {
-    const options = {style: 'currency', currency: 'USD'};
-    const numberFormat = new Intl.NumberFormat('en-US', options);
-    const configPrice = {
-      
-      yAxis: [{
-        offset: 20,
+  constructor(props){
+    super(props);
 
-        labels: {
-          formatter: function () {
-            return numberFormat.format(this.value) 
-          }
-          ,
-          x: -15,
-          style: {
-            "color": "#000", "position": "absolute"
-
-          },
-          align: 'left'
-        },
-      },
-        
-      ],
-      tooltip: {
-        shared: true,
-        formatter: function () {
-          return numberFormat.format(this.y, 0) +  '</b><br/>' + moment(this.x).format('MMMM Do YYYY, h:mm')
-        }
-      },
-      plotOptions: {
-        series: {
-          showInNavigator: true,
-          gapSize: 6,
-
-        }
-      },
-      rangeSelector: {
-        selected: 1
-      },
-      title: {
-        text: `Bitcoin stock price`
-      },
-      chart: {
-        height: 600,
-      },
-  
-      credits: {
-        enabled: false
-      },
-  
-      legend: {
-        enabled: true
-      },
-      xAxis: {
-        type: 'date',
-      },
-      rangeSelector: {
-        buttons: [{
-          type: 'day',
-          count: 1,
-          text: '1d',
-        }, {
-          type: 'day',
-          count: 7,
-          text: '7d'
-        }, {
-          type: 'month',
-          count: 1,
-          text: '1m'
-        }, {
-          type: 'month',
-          count: 3,
-          text: '3m'
-        },
-          {
-          type: 'all',
-          text: 'All'
-        }],
-        selected: 4
-      },
-      series: [{
-        name: 'Price',
-        type: 'spline',
-  
-        data: priceData,
-        tooltip: {
-          valueDecimals: 2
-        },
-  
-      }
-      ]
-    };
-    return (
-      <div>
-         <ReactHighcharts config = {configPrice}></ReactHighcharts>
-      </div>
-    )
+    this.handleCodeSelectClicked = this.handleCodeSelectClicked.bind(this);
+    this.state={
+      codeDialogOpen : false
+    }
   }
+  handleCodeSelectClicked = () => {
+    console.log('handleCodeSelectClicked')
+    console.log('this.state.codeDialogOpen',this.state.codeDialogOpen)
+    this.setState({
+      codeDialogOpen : !this.state.codeDialogOpen
+    })
+  }
+	render()
+	{
+		return (
+			<div>
+			  <Chart></Chart>
+        {/* <div> */}
+          {/* <Button variant="contained" color="primary" style={{marginLeft : '20px'}} onClick={(e)=>{this.handleCodeSelectClicked()}}> */}
+            {/* Code Select */}
+          {/* </Button> */}
+          {/* <CodeDialog open={this.state.codeDialogOpen}></CodeDialog> */}
+          {/* <Modal open={this.state.codeDialogOpen}></Modal> */}
+        {/* </div> */}
+			</div>
+		  )
+	}
 }
+
+
+
+// render()
+// {
+// 	return (
+// 		<div>
+// 		 {/* <ReactHighcharts config={configPrice}  ref="chart"></ReactHighcharts> */}
+// 		  <Chart></Chart>
+// 		   <div>
+// 			 <Button variant="contained" color="primary" style={{marginLeft : '20px'}} onClick={this.handleCodeSelectClicked.bind(this)}>
+// 			   Code Select
+// 			 </Button>
+// 			 {/* <CodeDialog open={this.state.codeDialogOpen}></CodeDialog> */}
+// 		   </div>
+// 		</div>
+// 	  )
+// }
